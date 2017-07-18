@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+<property ns="base" url="base_uir.swf"/>
+<list>
+<item cls="transparant.png" slice="false"/>
+<item cls="defaultPaneBg.png" slice="true" left="104" right="106" top="120" bottom="122"/>
+<item cls="paneFrame.png" slice="true" left="134" right="135" top="100" bottom="102"/>
+<item cls="normalBtn0.png" slice="true" left="28" right="29" top="13" bottom="14"/>
+<item cls="normalBtn1.png" slice="true" left="28" right="29" top="13" bottom="14"/>
+<item cls="normalBtn2.png" slice="true" left="28" right="29" top="13" bottom="14"/>
+<item cls="normalBtn3.png" slice="true" left="28" right="29" top="13" bottom="14"/>
+<item cls="defaultVScrollBar0.png" slice="true" left="7" right="8" top="4" bottom="6"/>
+<item cls="defaultVScrollBar1.png" slice="true" left="7" right="8" top="4" bottom="6"/>
+<item cls="defaultVScrollBar2.png" slice="true" left="7" right="8" top="4" bottom="6"/>
+<item cls="defaultVScrollBarFace.png"/>
+<item cls="defaultVScrollBound.png"/>
+<item cls="defaultVScrollDown0.png"/>
+<item cls="defaultVScrollDown1.png"/>
+<item cls="defaultVScrollDown2.png"/>
+<item cls="defaultVScrollUp0.png"/>
+<item cls="defaultVScrollUp1.png"/>
+<item cls="defaultVScrollUp2.png"/>
+<item cls="defaultComboDrop0.png"/>
+<item cls="defaultComboDrop1.png"/>
+<item cls="defaultComboDrop2.png"/>
+<item cls="defaultCheckSNON.png"/>
+<item cls="defaultCheckSNOY.png"/>
+<item cls="defaultCheckSYON.png"/>
+<item cls="defaultCheckSYOY.png"/>
+<item cls="calendarDay0.png"/>
+<item cls="calendarDay1.png"/>
+<item cls="calendarDay2.png"/>
+<item cls="calendarMP0.png"/>
+<item cls="calendarMP1.png"/>
+<item cls="calendarMP2.png"/>
+<item cls="calendarMN0.png"/>
+<item cls="calendarMN1.png"/>
+<item cls="calendarMN2.png"/>
+<item cls="calendarYN0.png"/>
+<item cls="calendarYN1.png"/>
+<item cls="calendarYN2.png"/>
+<item cls="calendarYP0.png"/>
+<item cls="calendarYP1.png"/>
+<item cls="calendarYP2.png"/>
+<item cls="calendar_chosen.png" slice="true" left="12" right="14" top="12" bottom="14"/>
+<item cls="wordStart.png"/>
+<item cls="wordEnd.png"/>
+<item cls="miniRndBrdGreyFrame.png" slice="true" left="12" right="13" top="7" bottom="8"/>
+</list>
+</config>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+<property ns="plugin" url="plugin_uir.swf"/>
+<list>
+<item cls="paneFrame.png" slice="true" left="63" right="64" top="76" bottom="77"/>
+</list>
+</config>

@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   width="200" height="400" creationComplete="creationCompleteHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import com.anstu.swfkit.SwfKit;
+			
+			import mx.events.FlexEvent;
+			import mx.graphics.codec.PNGEncoder;
+			
+			import struct.StBmd4Swf;
+			import struct.StFix;
+			import struct.StPic;
+			
+			private var dir:File = new File();
+			private var encoder:PNGEncoder = new PNGEncoder();
+			
+			private var picInfos:Vector.<StPic> = new Vector.<StPic>();
+			private var bmd4swfs:Vector.<StBmd4Swf> = new Vector.<StBmd4Swf>();
+			
+			private var OPER_LOCK:Boolean = false;
+			
+			private static const BATCH_JSFL_FILE:String = "batch.jsfl";
+			private var jsflBytes:ByteArray = new ByteArray();
+			
+			protected function creationCompleteHandler(event:FlexEvent):void
+			{
+				loadBatchJsfl();
+				selectBtn.addEventListener(MouseEvent.CLICK, __selectBtnFired);
+				outputBtn.addEventListener(MouseEvent.CLICK, __outputBtnFired);
+				fixBtn.addEventListener(MouseEvent.CLICK, __fixBtnFired);
+			}
+			
+			private function loadBatchJsfl():void
+			{
+				var file:File = File.applicationDirectory.resolvePath(BATCH_JSFL_FILE);
+				var fs:FileStream = new FileStream();
+				fs.open(file, FileMode.READ);
+				fs.readBytes(jsflBytes);
+				fs.close();
+			}
+			
+			private function __selectBtnFired(e:MouseEvent):void
+			{
+				if(OPER_LOCK) return;
+				dir.addEventListener(Event.SELECT, __dirSelected);
+				dir.browseForDirectory("选择avatar文档包,请将原始图片放于子目录src下");
+			}
+			
+			private function __dirSelected(e:Event):void
+			{
+				dir.removeEventListener(Event.SELECT, __dirSelected);
+				infoLabel.text = "选择的avatar文档包：\r\n" + (dir.nativePath);
+			}
+			
+			private function __outputBtnFired(e:MouseEvent):void
+			{
+				if(OPER_LOCK) return;
+				try
+				{
+					if(dir.exists && dir.isDirectory)
+					{
+						OPER_LOCK = true;
+						selectBtn.enabled = outputBtn.enabled = false;
+						output();
+					}
+				}
+				catch(e:Error)
+				{
+					infoLabel.text = "目录不合法或不存在！";
+				}
+			}
+			
+			private var resolveArr:Array = [];
+			private var curFileName:String = "tmp";
+			
+			private function output():void
+			{
+				//const BASE_DIR:String = dir.nativePath;
+				resolveArr.length = 0; 
+				picInfos.length = 0;
+				//
+				//var fs:Array = dir.getDirectoryListing();
+				var srcDir:File = new File(dir.nativePath + File.separator + "src" + File.separator);
+				if(srcDir.exists == false)
+				{
+					infoLabel.text = "请将原始图片放于子目录src下";
+					srcDir.createDirectory();
+					selectBtn.enabled = outputBtn.enabled = true;
+					OPER_LOCK = false;
+					return;
+				}
+				var fs:Array = srcDir.getDirectoryListing();
+				for(var i:int = 0; i < fs.length; i++)
+				{
+					var f:File = fs[i];
+					if(!f.isDirectory)
+					{
+						var ext:String = f.extension;
+						if(ext=="png" || ext=="jpg" || ext=="gif" || ext=="jpeg")
+						{
+							resolveArr.push(f);
+						}
+					}
+				}
+				loadPics();
+			}
+			
+			private function loadPics():void
+			{
+				if(resolveArr.length > 0)
+				{
+					var f:File = resolveArr.shift();
+					curFileName = f.name;
+					var addr:String = f.nativePath;
+					var l:Loader = new Loader();
+					l.contentLoaderInfo.addEventListener(Event.COMPLETE, __onePicLoaded);
+					l.load(new URLRequest(addr));
+				}
+				else
+				{
+					createCfg();
+					exportFla();
+					compileSwf();
+					OPER_LOCK = false;
+					selectBtn.enabled = outputBtn.enabled = true;
+					infoLabel.text = "执行完毕";
+				}
+			}
+			
+			private function __onePicLoaded(e:Event):void
+			{
+				trace("__onePicLoaded");
+				var l:Loader = e.target.loader;
+				var bmp:Bitmap = l.content as Bitmap;
+				handleBmd(bmp.bitmapData);
+			}
+			
+			private function handleBmd(bmd:BitmapData):void
+			{
+				infoLabel.text = "正在处理 " + curFileName;
+				var rect:Rectangle = bmd.getColorBoundsRect(0xFF000000,0x000000,false);
+				var cutBmd:BitmapData = new BitmapData(rect.width, rect.height, true);
+				cutBmd.copyPixels(bmd, rect, new Point(0,0));
+				var bytes:ByteArray = encoder.encode(cutBmd);
+				var of:File = dir.resolvePath("cut/"+curFileName);
+				var fs:FileStream = new FileStream();
+				fs.open(of, FileMode.WRITE);
+				fs.writeBytes(bytes);
+				fs.close();
+				//
+				picInfos.push(new StPic(curFileName, rect, bmd.width, bmd.height));
+				
+				bmd4swfs.push(new StBmd4Swf(cutBmd, curFileName));
+				//
+				loadPics();
+			}
+			
+			private function createCfg():void
+			{
+				infoLabel.text = "生成Cfg配置文件";
+				const BR:String = "\r\n";
+				var xmlStr:String = "<head></head>" + BR;
+				xmlStr += "<seq>" + BR;
+				for(var i:int = 0; i < picInfos.length; i++)
+				{
+					var p:StPic = picInfos[i];
+					xmlStr += p.getXmlNode();
+					xmlStr += BR;
+				}
+				xmlStr += "</seq>";
+				//
+				var of:File = dir.resolvePath(dir.name + ".xml");
+				var fs:FileStream = new FileStream();
+				fs.open(of, FileMode.WRITE);
+				fs.writeMultiByte(xmlStr, "UTF-8");
+				fs.close();
+				//
+				of = dir.resolvePath(dir.name + ".zip");
+				fs.open(of, FileMode.WRITE);
+				var zip:ByteArray = new ByteArray();
+				zip.writeMultiByte(xmlStr, "UTF-8");
+				zip.compress();
+				fs.writeBytes(zip);
+				fs.close();
+			}
+			
+			/** 导出fla文件 */
+			private function exportFla():void
+			{
+				infoLabel.text = "导出fla文件";
+				var swfFile:File = dir.resolvePath(dir.name + ".fla");
+				var fs:FileStream = new FileStream();
+				fs.open(swfFile, FileMode.WRITE);
+				fs.close();
+				
+				exportJsfl();
+			}
+			
+			private function exportJsfl():void
+			{
+				infoLabel.text = "导出jsfl脚本";
+				var file:File = dir.resolvePath(BATCH_JSFL_FILE);
+				var fs:FileStream = new FileStream();
+				fs.open(file, FileMode.WRITE);
+				fs.writeBytes(jsflBytes);
+				fs.close();
+				jsflBytes.position = 0;
+			}
+			
+			/** 编译swf */
+			private function compileSwf():void
+			{
+				if(!swfOpt.selected)
+				{
+					return;
+				}
+				var quality:int = quaSlider.value;
+				var kit:SwfKit = new SwfKit();
+				for(var i:int = 0; i < bmd4swfs.length; i++)
+				{
+					var item:StBmd4Swf = bmd4swfs[i];
+					trace("item.className=", item.className);
+					infoLabel.text = "编译 " + item.className;
+					kit.addPicARGB(item.className, item.bmd, quality);
+				}
+				infoLabel.text = "导出swf";
+				var bytes:ByteArray = kit.exportSwf();
+				var swfFile:File = dir.resolvePath(dir.name + ".swf");
+				var fs:FileStream = new FileStream();
+				fs.open(swfFile, FileMode.WRITE);
+				fs.writeBytes(bytes);
+				fs.close();
+				bmd4swfs.length = 0;
+			}
+			
+			private function __fixBtnFired(e:MouseEvent):void
+			{
+//				var xmlStr:String = '<Root><beaten_00001.png width="512" height="512" offx="224" offy="150"/><beaten_00002.png width="512" height="512" offx="227" offy="152"/><beaten_00003.png width="512" height="512" offx="222" offy="147"/><beaten_00004.png width="512" height="512" offx="224" offy="150"/><beaten_10001.png width="512" height="512" offx="232" offy="149"/></Root>';
+//				var xml:XML = XML(xmlStr);
+//				var list:XMLList = (xml.children());
+//				const LEN:int = list.length();
+//				for(var i:int = 0; i < LEN; i++)
+//				{
+//					var part:XML = list[i];
+//					trace(part.name(), part.@width, part.@height, part.@offx, part.@offy);
+//					
+//				}
+				
+				//return;
+				if(OPER_LOCK) return;
+				dir.addEventListener(Event.SELECT, __fixDirSelected);
+				dir.browseForDirectory("选择剪裁过的图片文件夹");
+			}
+			
+			private var fixTask:Vector.<StFix> = new Vector.<StFix>();
+			
+			private function __fixDirSelected(e:Event):void
+			{
+				fixTask.length = 0;
+				dir.removeEventListener(Event.SELECT, __fixDirSelected);
+				infoLabel.text = "选择剪裁过的图片文件夹：\r\n" + (dir.nativePath);
+				var cfgFile:File = dir.parent.resolvePath("unzip.xml");
+				var cfgFs:FileStream = new FileStream();
+				cfgFs.open(cfgFile, FileMode.READ);
+				var cfgBytes:ByteArray = new ByteArray();
+				cfgFs.readBytes(cfgBytes);
+				//trace(cfgBytes.bytesAvailable);
+				var xmlStr:String = new String(cfgBytes);
+				//trace(xmlStr);
+				var xml:XML = XML(xmlStr);
+				var list:XMLList = (xml.children());
+				const LEN:int = list.length();
+				for(var i:int = 0; i < LEN; i++)
+				{
+					var part:XML = list[i];
+					
+					var ft:StFix = new StFix();
+					
+					ft.picName = part.name();
+					ft.picWidth = part.@width;
+					ft.picHeight = part.@height;
+					ft.picOffX = part.@offx;
+					ft.picOffY = part.@offy;
+					//trace(part.name(), part.@width, part.@height, part.@offx, part.@offy);
+					ft.picFile = dir.resolvePath(ft.picName);
+					
+					fixTask.push(ft);
+				}
+				handleFixTask();
+			}
+			
+			private var curFt:StFix;
+			private function handleFixTask():void
+			{
+				if(fixTask.length > 0)
+				{
+					var ft:StFix = fixTask.pop();
+					curFt = ft;
+					trace("ft.picFile=" + ft.picFile.nativePath);
+					var picFs:FileStream = new FileStream();
+					picFs.open(ft.picFile, FileMode.READ);
+					var picBytes:ByteArray = new ByteArray();
+					picFs.readBytes(picBytes);
+					picFs.close();
+					
+					var loader:Loader = new Loader();
+					loader.contentLoaderInfo.addEventListener(Event.COMPLETE, __fixPicLoaded);
+					loader.loadBytes(picBytes);
+				}
+				else
+				{
+					trace("已全部恢复");
+					infoLabel.text = "已全部恢复";
+				}
+			}
+			
+			private function __fixPicLoaded(e:Event):void
+			{	
+				var loader:Loader = e.target.loader;
+				var bmd:BitmapData = new BitmapData(curFt.picWidth, curFt.picHeight, true, 0x0);
+				var mtx:Matrix = new Matrix();
+				mtx.tx = curFt.picOffX;
+				mtx.ty = curFt.picOffY;
+				bmd.draw(loader, mtx);
+				var rstBa:ByteArray = encoder.encode(bmd);
+				var rstFs:FileStream = new FileStream();
+				var rstFileName:String = curFt.picFile.parent.nativePath + File.separator + "after" + File.separator + curFt.picFile.name;
+				
+				var rstFile:File = new File(rstFileName);
+				rstFs.open(rstFile, FileMode.WRITE);
+				rstFs.writeBytes(rstBa);
+				rstFs.close();
+				
+				//trace("rstFileName=" + rstFileName);
+				infoLabel.text = "正在恢复到" + rstFileName + "\r\n 剩余：" + fixTask.length + "张";
+				
+				handleFixTask();
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:Button id="selectBtn" x="50" y="190" width="100" label="选择"/>
+	<s:Button id="outputBtn" x="50" y="270" width="100" label="输出"/>
+	<s:Button id="fixBtn" x="50" y="310" width="100" label="修复"/>
+	<s:Label id="infoLabel" x="10" y="10" width="180" height="160" backgroundColor="#FFACAC" text="调试信息"
+			 textAlign="center" verticalAlign="middle"/>
+	<s:Label x="50" y="235" text="编译品质:{quaSlider.value}"/>
+	<s:HSlider id="quaSlider" x="50" y="255" minimum="10" maximum="100" value="90"/>
+	<s:CheckBox id="swfOpt" x="50" y="340" label="是否导出swf"/>
+	
+</s:WindowedApplication>

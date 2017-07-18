@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="com.anstu.jload.JLoader"/>
+    <classEntry path="com.anstu.jload.JLoadEvent"/>
+    <classEntry path="com.anstu.jload.loaders.JBaseLoader"/>
+    <classEntry path="com.anstu.jload.JLoadTask"/>
+    <classEntry path="com.anstu.jload.JLoaderDemo"/>
+    <classEntry path="com.anstu.jload.JLoadLog"/>
+    <classEntry path="com.anstu.jload.loaders.JDisplayLoader"/>
+    <classEntry path="com.anstu.jload.loaders.JClassLoader"/>
+    <classEntry path="com.anstu.jload.loaders.JDataLoader"/>
+    <classEntry path="com.anstu.jload.loaders.JSoundLoader"/>
+    <classEntry path="com.anstu.jload.loaders.JVideoLoader"/>
+    <classEntry path="com.anstu.jload.struct.JVideoMetaData"/>
+    <classEntry path="com.anstu.jload.struct.JLoadResult"/>
+    <classEntry path="com.anstu.jload.struct.JLoadStatus"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

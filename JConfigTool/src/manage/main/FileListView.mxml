@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="380" height="480" creationComplete="creationCompleteHandler(event)">
+	
+	<fx:Script>
+		<![CDATA[
+			
+			import manage.MainManage;
+			
+			import mx.collections.ArrayList;
+			import mx.events.FlexEvent;
+			
+			import data.FileInfo;
+			
+			[Bindable]
+			private var xlsxDataArr:ArrayList = new ArrayList();
+			[Bindable]
+			private var bufDataArr:ArrayList = new ArrayList();
+			[Bindable]
+			private var binDataArr:ArrayList = new ArrayList();
+			
+			[Bindable]
+			private var taskDataArr:ArrayList = new ArrayList();
+			
+			protected function creationCompleteHandler(event:FlexEvent):void
+			{
+				//
+			}
+			
+			public function updateXlsxFiles(fis:Vector.<FileInfo>):void
+			{
+				xlsxDataArr.removeAll();
+				for(var i:int = 0; i < fis.length; i++)
+				{
+					xlsxDataArr.addItem(fis[i]);
+				}
+			}
+			
+			public function updateCfgbufFiles(fis:Vector.<FileInfo>):void
+			{
+				bufDataArr.removeAll();
+				for(var i:int = 0; i < fis.length; i++)
+				{
+					bufDataArr.addItem(fis[i]);
+				}
+			}
+			
+			public function updateCfgbinFiles(fis:Vector.<FileInfo>):void
+			{
+				binDataArr.removeAll();
+				for(var i:int = 0; i < fis.length; i++)
+				{
+					binDataArr.addItem(fis[i]);
+				}
+			}
+			
+			/** 选择当前页的全部 */
+			protected function __selectAllItem(event:MouseEvent):void
+			{
+				var indices:Vector.<int> = new Vector.<int>();
+				var i:int = 0;
+				switch(according.selectedIndex)
+				{
+				case 0:
+					for(i = 0; i < xlsxDataArr.length; i++)
+					{
+						indices.push(i);
+					}
+					xlsxList.selectedIndices = indices;
+					break;
+				case 1:
+					for(i = 0; i < bufDataArr.length; i++)
+					{
+						indices.push(i);
+					}
+					bufList.selectedIndices = indices;
+					break;
+				case 2:
+					for(i = 0; i < binDataArr.length; i++)
+					{
+						indices.push(i);
+					}
+					binList.selectedIndices = indices;
+					break;
+				}
+			}
+			
+			/** 添加到队伍列表 */
+			protected function __addToTaskList(event:MouseEvent):void
+			{
+				switch(according.selectedIndex)
+				{
+				case 0:
+					addToTaskList(xlsxList.selectedItems);
+					xlsxList.selectedIndices = null;
+					break;
+				case 1:
+					addToTaskList(bufList.selectedItems);
+					bufList.selectedIndices = null;
+					break;
+				case 2:
+					addToTaskList(binList.selectedItems);
+					binList.selectedIndices = null;
+					break;
+				}
+			}
+			
+			
+			/** 添加到任务队列 */
+			private function addToTaskList(items:Vector.<Object>):void
+			{
+				for(var i:int = 0; i < items.length; i++)
+				{
+					taskDataArr.addItem(items[i]);
+				}
+			}
+			
+			/** 从任务队列中移除 */
+			protected function __removeFromTaskList(event:MouseEvent):void
+			{
+				var items:Vector.<Object> = taskList.selectedItems;
+				for(var i:int = 0; i < items.length; i++)
+				{
+					removeTask(items[i]);
+				}
+			}
+			
+			/** 获取当前全部任务 */
+			public function getTasks():ArrayList
+			{
+				return taskDataArr;
+			}
+			
+			/** 移除某个任务 */
+			public function removeTask(item:Object):void
+			{
+				taskDataArr.removeItem(item);
+			}
+			
+			/** 更新进度 */
+			public function updateProgress(value:Number, total:Number, label:String=""):void
+			{
+				progressBar.setProgress(value, total);
+				progressBar.label = label + " %3%";
+			}
+			
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<mx:Accordion id="according" x="10" y="10" width="360" height="280">
+		<s:NavigatorContent width="100%" height="100%" label="xlsx">
+			<s:List id="xlsxList" x="10" y="10" width="340" height="200" dataProvider="{xlsxDataArr}" allowMultipleSelection="true"></s:List>
+		</s:NavigatorContent>
+		<s:NavigatorContent width="100%" height="100%" label="cfgbuf">
+			<s:List id="bufList" x="10" y="10" width="340" height="200" dataProvider="{bufDataArr}" allowMultipleSelection="true"></s:List>
+		</s:NavigatorContent>
+		<s:NavigatorContent width="100%" height="100%" label="cfgbin">
+			<s:List id="binList" x="10" y="10" width="340" height="200" dataProvider="{binDataArr}" allowMultipleSelection="true"></s:List>
+		</s:NavigatorContent>
+	</mx:Accordion>
+	
+	<s:Button x="10" y="300" width="100" label="全选当前" click="__selectAllItem(event)"/>
+	<s:Button x="140" y="300" width="100" label="加入任务列表" click="__addToTaskList(event)"/>
+	<s:Button x="270" y="300" width="100" label="从任务中移除" click="__removeFromTaskList(event)"/>
+	
+	<s:List id="taskList" x="10" y="330" width="360" height="100" dataProvider="{taskDataArr}" allowMultipleSelection="true"></s:List>
+	<mx:ProgressBar id="progressBar" x="10" y="440" width="360" mode="manual"/>
+	
+</s:Group>

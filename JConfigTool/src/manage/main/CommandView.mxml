@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="380" height="180">
+	
+	<fx:Script>
+		<![CDATA[
+			import data.Cfgbin2Cfgbuf;
+			import data.Cfgbuf2Cfgbin;
+			import data.Xlsx2Cfgbuf;
+			
+			import mx.controls.Alert;
+			
+			protected function xlsx2cfgbuf_clickHandler(event:MouseEvent):void
+			{
+				new Xlsx2Cfgbuf().run();
+			}
+			
+			protected function cfgbuf2cfgbin_clickHandler(event:MouseEvent):void
+			{
+				new Cfgbuf2Cfgbin().run();
+			}
+			
+			protected function cfgbin2cfgbuf_clickHandler(event:MouseEvent):void
+			{
+				new Cfgbin2Cfgbuf().run();
+			}
+			
+			protected function cfgbuf2xlsx_clickHandler(event:MouseEvent):void
+			{
+				Alert.show("暂时不支持此功能", "遗憾");
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	
+	
+	<mx:TabNavigator x="0" y="0" width="100%" height="180">
+		<s:NavigatorContent width="100%" height="100%" label="xlsx -> cfgbuf">
+			<s:Label x="10" y="10" text="Excel工作簿文件[*.xlsx] -> 配置表文件[*.cfgbuf]"/>
+			<s:Button id="xlsx2cfgbuf" x="10" y="30" width="360" label="执行" click="xlsx2cfgbuf_clickHandler(event)"/>
+			<s:Image x="0" y="60" source="assets/xlsx_cfgbuf.png"/>
+		</s:NavigatorContent>
+		<s:NavigatorContent width="100%" height="100%" label="cfgbuf -> cfgbin">
+			<s:Label x="10" y="10" text="配置表文件[*.cfgbuf] -> 配置产出文件[*.cfgbin]"/>
+			<s:Button id="cfgbuf2cfgbin" x="10" y="30" width="360" label="执行" click="cfgbuf2cfgbin_clickHandler(event)"/>
+			<s:Image x="0" y="60" source="assets/cfgbuf_cfgbin.png"/>
+		</s:NavigatorContent>
+		<s:NavigatorContent width="100%" height="100%" label="cfgbin -> cfgbuf">
+			<s:Label x="10" y="10" text="配置产出文件[*.cfgbin] -> 配置表文件[*.cfgbuf]"/>
+			<s:Button id="cfgbin2cfgbuf" x="10" y="30" width="360" label="执行" click="cfgbin2cfgbuf_clickHandler(event)"/>
+			<s:Image x="0" y="60" source="assets/cfgbin_cfgbuf.png"/>
+		</s:NavigatorContent>
+		<s:NavigatorContent width="100%" height="100%" label="cfgbuf -> xlsx">
+			<s:Label x="10" y="10" text="配置表文件[*.cfgbuf] -> Excel工作簿文件[*.xlsx]"/>
+			<s:Button id="cfgbuf2xlsx" x="10" y="30" width="360" label="执行" click="cfgbuf2xlsx_clickHandler(event)"/>
+			<s:Image x="0" y="60" source="assets/cfgbuf_xlsx.png"/>
+		</s:NavigatorContent>
+	</mx:TabNavigator>
+	
+</s:Group>

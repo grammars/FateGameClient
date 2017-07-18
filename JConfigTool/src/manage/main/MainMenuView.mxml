@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="380" height="40">
+	
+	<fx:Script>
+		<![CDATA[
+			import manage.CentreManage;
+			import manage.CreateProjManage;
+			import manage.createProj.CreateProjView;
+			
+			import mx.collections.XMLListCollection;
+			import mx.controls.Alert;
+			import mx.events.MenuEvent;
+			import mx.managers.PopUpManager;
+			
+			/** 菜单选项的XML */
+			private var menuXML:XMLList = <>
+												<menuitem label="文件" data="top">
+													<item label="新建项目" name="newProj" />
+													<item label="打开项目" name="openProj" />
+													<item label="关闭项目" name="closeProj" />
+													<item type="separator" />
+													<item label="退出" name="exit" />
+												</menuitem>
+												<menuitem label="设置" data="top">
+													<item label="刷新项目空间" name="updateProj" />
+												</menuitem>
+												<menuitem label="帮助" data="top">
+													<item label="关于..." name="about" />
+													<item label="使用帮助" name="help" />
+												</menuitem>
+											</>;
+			
+			
+			/** 菜单选项XMLList集合 */
+			[Bindable]
+			private var menuCollection:XMLListCollection = new XMLListCollection(menuXML);
+			
+			
+			/**选择点击菜单中某一项时候的处理函数*/
+			protected function itemClickHandler(event:MenuEvent):void
+			{
+				var type:String = event.item.@name;
+				switch (type){
+					case "newProj":
+						CreateProjManage.show();
+						break;
+					case "openProj":
+						CentreManage.openProj();
+						break;
+					case "closeProj":
+						CentreManage.closeProj();
+						break;
+					case "exit":
+						CentreManage.shutdown();
+						break;
+					case "updateProj":
+						CentreManage.updateProjSpace();
+						break;
+					case "about":
+						Alert.show("版权所有，任意拷贝，翻录不究，有事M我，QQ：278884301\n版本号:1.2.0");
+						break;
+					case "help":
+						Alert.show("请打12580，一按我帮您！");
+						break;
+				}
+			}
+			
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	
+	<mx:MenuBar id="menuBar" x="0" y="0" width="100%" dataProvider="{menuCollection}" labelField="@label"
+				itemClick="itemClickHandler(event)" />
+
+	
+</s:Group>

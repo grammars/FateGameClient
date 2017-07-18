@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   width="380" height="700"
+					   applicationComplete="applicationCompleteHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import manage.CentreManage;
+			
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			
+			import utils.InvokeHandler;
+			import utils.excel.ExcelUtil;
+			
+			protected function applicationCompleteHandler(event:FlexEvent):void
+			{
+				ExcelUtil.getColIndex("AG1");
+				CentreManage.startup(this);
+			}
+			
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	
+</s:WindowedApplication>

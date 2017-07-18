@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		  width="100%" height="100%" xmlns:ui="ui.*" xmlns:main="manage.main.*">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			
+			import manage.CentreManage;
+			import manage.createProj.CreateProjView;
+			
+			import mx.collections.ArrayCollection;
+			import mx.collections.XMLListCollection;
+			import mx.controls.Alert;
+			import mx.core.IFlexDisplayObject;
+			import mx.events.FlexEvent;
+			import mx.events.ItemClickEvent;
+			import mx.events.MenuEvent;
+			import mx.events.ResizeEvent;
+			import mx.managers.PopUpManager;
+			
+			import data.FileInfo;
+			
+			/** 刷新文件列表
+			 * @param type:int 0:xlsx 1:cfgbuf 2:cfgbin */
+			public function updateFileList(fis:Vector.<FileInfo>, type:int):void
+			{
+				switch(type)
+				{
+				case 0:
+					fileList.updateXlsxFiles(fis);
+					break;
+				case 1:
+					fileList.updateCfgbufFiles(fis);
+					break;
+				case 2:
+					fileList.updateCfgbinFiles(fis);
+					break;
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<main:MainMenuView x="0" y="0"/>
+	
+	<main:FileListView id="fileList" x="0" y="20"/>
+	
+	<main:CommandView x="0" y="500"/>
+
+	
+</s:Group>

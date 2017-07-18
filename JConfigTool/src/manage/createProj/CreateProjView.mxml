@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" width="300" height="320"
+			   title="新建项目"
+			    creationComplete="creationCompleteHandler(event)">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			
+			import manage.CreateProjManage;
+			
+			import mx.controls.Alert;
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
+			
+			import utils.BaseUtils;
+			
+			protected function creationCompleteHandler(event:FlexEvent):void
+			{
+				this.addEventListener(CloseEvent.CLOSE, __onClose);
+			}
+			
+			private function __onClose(event:CloseEvent):void
+			{
+				CreateProjManage.hide();
+			}
+			
+			protected function __sureBtnClick(event:MouseEvent):void
+			{
+				if(BaseUtils.trimSpace(projNameInput.text) == "")
+				{
+					Alert.show("项目名不能为空", "创建项目失败");
+				}
+				else if(fileTree.selectedPath == null)
+				{
+					Alert.show("工作空间不能为空", "创建项目失败");
+				}
+				else
+				{
+					CreateProjManage.create(projNameInput.text, fileTree.selectedPath);
+					CreateProjManage.hide();
+				}
+			}
+			
+			protected function __cancelBtnClick(event:MouseEvent):void
+			{
+				CreateProjManage.hide();
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:Label x="15" y="20" fontFamily="Arial" fontWeight="normal"
+			 text="项目名称："/>
+	<s:TextInput id="projNameInput" x="90" y="20" width="190"/>
+	
+	<s:Label x="15" y="60" fontFamily="Arial" fontWeight="normal"
+			 text="工作空间："/>
+	<mx:FileSystemTree id="fileTree" x="90" y="60" width="190" selectable="true"/>
+	
+	<s:Button id="sureBtn" x="15" y="250" width="120" label="创建" click="__sureBtnClick(event)"/>
+	<s:Button id="cancelBtn" x="160" y="250" width="120" label="放弃" click="__cancelBtnClick(event)"/>
+	
+</s:TitleWindow>

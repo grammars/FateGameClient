@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+<property ns="default" url="default_uir.swf"/>
+<list>
+
+<item cls="Frame_bg_active.png" slice="true" left="20" right="358" top="35" bottom="155"/>
+<item cls="Frame_bg_inactive.png" slice="true" left="20" right="358" top="35" bottom="155"/>
+<item cls="Frame_close_default.png"/>
+<item cls="Frame_close_disabled.png"/>
+<item cls="Frame_close_over.png"/>
+<item cls="Frame_close_pressed.png"/>
+<item cls="Frame_iconified_default.png"/>
+<item cls="Frame_iconified_disabled.png"/>
+<item cls="Frame_iconified_over.png"/>
+<item cls="Frame_iconified_pressed.png"/>
+<item cls="Frame_maximize_default.png"/>
+<item cls="Frame_maximize_disabled.png"/>
+<item cls="Frame_maximize_over.png"/>
+<item cls="Frame_maximize_pressed.png"/>
+<item cls="Frame_normal_default.png"/>
+<item cls="Frame_normal_disabled.png"/>
+<item cls="Frame_normal_over.png"/>
+<item cls="Frame_normal_pressed.png"/>
+
+<item cls="CheckBox_default.png"/>
+<item cls="CheckBox_over.png"/>
+<item cls="CheckBox_pressed.png"/>
+<item cls="CheckBox_disabled.png"/>
+<item cls="CheckBox_default_selected.png"/>
+<item cls="CheckBox_over_selected.png"/>
+<item cls="CheckBox_pressed_selected.png"/>
+<item cls="CheckBox_disabled_selected.png"/>
+
+<item cls="RadioButton_default.png"/>
+<item cls="RadioButton_over.png"/>
+<item cls="RadioButton_pressed.png"/>
+<item cls="RadioButton_disabled.png"/>
+<item cls="RadioButton_default_selected.png"/>
+<item cls="RadioButton_over_selected.png"/>
+<item cls="RadioButton_pressed_selected.png"/>
+<item cls="RadioButton_disabled_selected.png"/>
+
+<item cls="Button_default.png" slice="true" left="24" right="25" top="9" bottom="10"/>
+<item cls="Button_default_shine.png" slice="true" left="24" right="25" top="9" bottom="10"/>
+<item cls="Button_over.png" slice="true" left="24" right="25" top="9" bottom="10"/>
+<item cls="Button_pressed.png" slice="true" left="24" right="25" top="9" bottom="10"/>
+<item cls="Button_disabled.png" slice="true" left="24" right="25" top="9" bottom="10"/>
+
+<item cls="Slider_h_background.png" slice="true" left="65" right="67" top="8" bottom="9"/>
+<item cls="Slider_h_handle_default.png"/>
+<item cls="Slider_h_handle_disabled.png"/>
+<item cls="Slider_h_handle_over.png"/>
+<item cls="Slider_h_handle_pressed.png"/>
+<item cls="Slider_v_background.png" slice="true" left="8" right="9" top="65" bottom="67"/>
+<item cls="Slider_v_handle_default.png"/>
+<item cls="Slider_v_handle_disabled.png"/>
+<item cls="Slider_v_handle_over.png"/>
+<item cls="Slider_v_handle_pressed.png"/>
+
+<item cls="ScrollBar_h_background.png" slice="true" left="9" right="11" top="7" bottom="9"/>
+<item cls="ScrollBar_h_handle_default.png" slice="true" left="10" right="12" top="7" bottom="8"/>
+<item cls="ScrollBar_h_handle_disabled.png" slice="true" left="10" right="12" top="7" bottom="8"/>
+<item cls="ScrollBar_h_handle_over.png" slice="true" left="10" right="12" top="7" bottom="8"/>
+<item cls="ScrollBar_h_handle_pressed.png" slice="true" left="10" right="12" top="7" bottom="8"/>
+<item cls="ScrollBar_h_handle_face.png"/>
+<item cls="ScrollBar_v_background.png" slice="true" left="7" right="9" top="9" bottom="11"/>
+<item cls="ScrollBar_v_handle_default.png" slice="true" left="10" right="12" top="7" bottom="8"/>
+<item cls="ScrollBar_v_handle_disabled.png" slice="true" left="10" right="12" top="7" bottom="8"/>
+<item cls="ScrollBar_v_handle_over.png" slice="true" left="10" right="12" top="7" bottom="8"/>
+<item cls="ScrollBar_v_handle_pressed.png" slice="true" left="10" right="12" top="7" bottom="8"/>
+<item cls="ScrollBar_v_handle_face.png"/>
+
+<item cls="Common_arrow_left_default.png"/>
+<item cls="Common_arrow_left_over.png"/>
+<item cls="Common_arrow_left_pressed.png"/>
+<item cls="Common_arrow_left_disabled.png"/>
+<item cls="Common_arrow_right_default.png"/>
+<item cls="Common_arrow_right_over.png"/>
+<item cls="Common_arrow_right_pressed.png"/>
+<item cls="Common_arrow_right_disabled.png"/>
+<item cls="Common_arrow_up_default.png"/>
+<item cls="Common_arrow_up_over.png"/>
+<item cls="Common_arrow_up_pressed.png"/>
+<item cls="Common_arrow_up_disabled.png"/>
+<item cls="Common_arrow_down_default.png"/>
+<item cls="Common_arrow_down_over.png"/>
+<item cls="Common_arrow_down_pressed.png"/>
+<item cls="Common_arrow_down_disabled.png"/>
+
+<item cls="Text_bg_default.png" slice="true" left="32" right="34" top="10" bottom="11"/>
+<item cls="Text_bg_disabled.png" slice="true" left="32" right="34" top="10" bottom="11"/>
+<item cls="Text_bg_over.png" slice="true" left="32" right="34" top="10" bottom="11"/>
+<item cls="Text_bg_uneditable.png" slice="true" left="32" right="34" top="10" bottom="11"/>
+
+<item cls="ComboBox_label_default.png" slice="true" left="13" right="15" top="12" bottom="13"/>
+<item cls="ComboBox_label_over.png" slice="true" left="13" right="15" top="12" bottom="13"/>
+<item cls="ComboBox_label_pressed.png" slice="true" left="13" right="15" top="12" bottom="13"/>
+<item cls="ComboBox_label_disabled.png" slice="true" left="13" right="15" top="12" bottom="13"/>
+<item cls="ComboBox_label_DD_sto.png" slice="true" left="13" right="15" top="12" bottom="13"/>
+<item cls="ComboBox_label_over_sto.png" slice="true" left="13" right="15" top="12" bottom="13"/>
+<item cls="ComboBox_label_pressed_sto.png" slice="true" left="13" right="15" top="12" bottom="13"/>
+<item cls="ComboBox_drop_default.png"/>
+<item cls="ComboBox_drop_default_s.png"/>
+<item cls="ComboBox_drop_over.png"/>
+<item cls="ComboBox_drop_over_s.png"/>
+<item cls="ComboBox_drop_pressed.png"/>
+<item cls="ComboBox_drop_pressed_s.png"/>
+<item cls="ComboBox_drop_disabled.png"/>
+<item cls="ComboBox_drop_disabled_s.png"/>
+
+<item cls="ProgressBar_h_BG.png" slice="true" left="19" right="20" top="7" bottom="8"/>
+<item cls="ProgressBar_h_FG.png" slice="true" left="15" right="16" top="6" bottom="7"/>
+<item cls="ProgressBar_v_BG.png" slice="true" left="7" right="8" top="19" bottom="20"/>
+<item cls="ProgressBar_v_FG.png" slice="true" left="6" right="7" top="15" bottom="16"/>
+
+<item cls="System_vResizeCursor.png"/>
+<item cls="System_hMoveCursor.png"/>
+<item cls="System_hResizeCursor.png"/>
+<item cls="System_hvResizeCursor.png"/>
+<item cls="System_vMoveCursor.png"/>
+
+</list>
+</config>

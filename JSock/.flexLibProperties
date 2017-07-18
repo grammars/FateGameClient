@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="com.anstu.jsock.proxy.filter.FreeByteCodecDecoder"/>
+    <classEntry path="com.anstu.jsock.proxy.filter.FreeByteCodecEncoder"/>
+    <classEntry path="com.anstu.jsock.proxy.filter.FreeByteCodecFactory"/>
+    <classEntry path="com.anstu.jsock.utils.ByteBuffer"/>
+    <classEntry path="com.anstu.jsock.utils.Long"/>
+    <classEntry path="com.anstu.jsock.utils.MD5"/>
+    <classEntry path="com.anstu.jsock.proxy.filter.ByteBufferCodecEncoder"/>
+    <classEntry path="com.anstu.jsock.proxy.filter.ByteBufferCodecDecoder"/>
+    <classEntry path="com.anstu.jsock.proxy.filter.ByteBufferCodecFactory"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="gamekit.map.material.MapTile"/>
+    <classEntry path="gamekit.component.Swf"/>
+    <classEntry path="gamekit.map.deco.struct.StMapDecoCfg"/>
+    <classEntry path="gamekit.map.deco.MapDecorator"/>
+    <classEntry path="gamekit.map.deco.MapDecoSwf"/>
+    <classEntry path="gamekit.utils.DisObjSelect"/>
+    <classEntry path="gamekit.avatar.events.AvatarEvent"/>
+    <classEntry path="gamekit.GameScene"/>
+    <classEntry path="gamekit.map.events.MapEvent"/>
+    <classEntry path="gamekit.avatar.material.ActionSpeed"/>
+    <classEntry path="gamekit.layer.Layer"/>
+    <classEntry path="gamekit.layer.BackgroundLayer"/>
+    <classEntry path="gamekit.layer.ForegroundLayer"/>
+    <classEntry path="gamekit.avatar.res.AvatarPreRes"/>
+    <classEntry path="gamekit.debug.AvtMonitor"/>
+    <classEntry path="gamekit.utils.StrParser"/>
+    <classEntry path="gamekit.utils.StrUtils"/>
+    <classEntry path="gamekit.utils.Utils"/>
+    <classEntry path="gamekit.utils.GeomUtils"/>
+    <classEntry path="gamekit.layer.UILayer"/>
+    <classEntry path="gamekit.layer.AlertLayer"/>
+    <classEntry path="gamekit.layer.LoadingLayer"/>
+    <classEntry path="gamekit.map.material.AroundTraver"/>
+    <classEntry path="gamekit.ds.pair.PairIntInt"/>
+    <classEntry path="gamekit.ds.pair.PairNumNum"/>
+    <classEntry path="gamekit.ds.pair.PairIntStr"/>
+    <classEntry path="gamekit.ds.pair.Pair"/>
+    <classEntry path="gamekit.ds.pair.PairIntObj"/>
+    <classEntry path="gamekit.algorithm.dijkstra.Digraph"/>
+    <classEntry path="gamekit.algorithm.dijkstra.DigraphVertex"/>
+    <classEntry path="gamekit.ds.Map"/>
+    <classEntry path="gamekit.paint.Sector"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>
